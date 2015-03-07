@@ -1,0 +1,33 @@
+drop table if exists nypd_motor_vehicle_collisions;
+
+create table nypd_motor_vehicle_collisions (
+	date DATE,
+	time TIME,
+	borough varchar(256),
+	zip_code varchar(256),
+	latitude FLOAT,
+	longitude FLOAT,
+	location varchar(256),
+	on_street_name varchar(256),
+	cross_street_name varchar(256),
+	off_street_name varchar(256),
+	number_of_persons_injured INT,
+	number_of_persons_killed INT,
+	number_of_pedestrians_injured INT,
+	number_of_pedestrians_killed INT,
+	number_of_cyclist_injured INT,
+	number_of_cyclist_killed INT,
+	number_of_motorist_injured INT,
+	number_of_motorist_killed INT,
+	contributing_factor_vehicle_1 varchar(256),
+	contributing_factor_vehicle_2 varchar(256),
+	contributing_factor_vehicle_3 varchar(256),
+	contributing_factor_vehicle_4 varchar(256),
+	contributing_factor_vehicle_5 varchar(256),
+	unique_key BIGINT,
+	vehicle_type_code_1 varchar(256),
+	vehicle_type_code_2 varchar(256),
+	vehicle_type_code_3 varchar(256),
+	vehicle_type_code_4 varchar(256),
+	vehicle_type_code_5 varchar(256)
+);
