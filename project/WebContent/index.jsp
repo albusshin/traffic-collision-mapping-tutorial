@@ -31,8 +31,9 @@
 				</div>
 			</div>
 		</nav>
+		<%
 		
-		<div class="container">
-		</div>
+		%>
+		<iframe width='100%' height='520' frameborder='0' src='http://albusshin.cartodb.com/viz/7953453e-c568-11e4-bea7-0e9d821ea90d/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
 </body>
 </html>
