@@ -7,12 +7,15 @@
 <title>Traffic Collision Mapping Tutorial - HP Haven</title>
 <!-- Bootstrap, jQuery, and Chart.js -->
 <script src="js/jquery-1.11.2.js"></script>
+<script src="js/jquery-ui-1.11.3/jquery-ui.min.js"></script>
+<script src="js/jQRangeSlider-5.7.1/jQRangeSlider-min.js"></script>
+<script src="js/jQRangeSlider-5.7.1/jQAllRangeSliders-min.js"></script>
 <script src="js/Chart.js"></script>
 
 <link rel="stylesheet" href="js/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="js/bootstrap/css/bootstrap-theme.min.css">
 <script src="js/bootstrap/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="js/jQRangeSlider-5.7.1/css/iThing-min.css">
 </head>
 <body>
 		<nav class="navbar navbar-default">
@@ -20,20 +23,24 @@
 				<div class="navbar-header">
 					<div class="navbar-brand">Traffic Collision Mapping Tutorial</div>
 				</div>
-				<div class="nav navbar-nav navbar-right">
-					<form action="" method="GET" class="form-inline">
-						<div class="form-group">
-							<input type="text" class="form-control" name="tag" id="tag" placeholder="Search Tag">
-							<input type="number" class="form-control" name="amount" step='1' value="50" />
-							<button type="submit" class="btn btn-default">Search</button>
-						</div>
-					</form>
-				</div>
 			</div>
 		</nav>
-		<%
 		
-		%>
-		<iframe width='100%' height='520' frameborder='0' src='http://albusshin.cartodb.com/viz/7953453e-c568-11e4-bea7-0e9d821ea90d/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
+		<div id="slider"></div>
+		<label>With Deaths: </label>
+		<input type="checkbox" id="withdeaths" name="withdeaths">
+		<label>With Injuries: </label>
+		<input type="checkbox" id="withinjuries" name="withinjuries">
+		<label>With Pedestrians Involved: </label>
+		<input type="checkbox" id="withpedestriansinvolved" name="withpedestriansinvolved">
+		<label>With Cyclists Involved: </label>
+		<input type="checkbox" id="withcyclistsinvolved" name="withcyclistsinvolved">
+		<label>With Motorists Involved: </label>
+		<input type="checkbox" id="withmotoristsinvolved" name="withmotoristsinvolved">
+		
+		<button class="btn btn-pretty btn-success filter">Filter</button>
+		<script src="js/script.js"></script>
+		<iframe id="mapframe" width='100%' height='720' frameborder='0' src='http://albusshin.cartodb.com/viz/e43f2674-c941-11e4-bca1-0e4fddd5de28/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
+		
 </body>
 </html>
