@@ -1,0 +1,4 @@
+To get rid of redundant information:
+select count(*) from nypd_motor_vehicle_collisions where longitude is null or latitude is null;
+delete from nypd_motor_vehicle_collisions where longitude is null or latitude is null;
+commit;

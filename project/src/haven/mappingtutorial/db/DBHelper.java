@@ -18,7 +18,7 @@ import java.util.List;
 public class DBHelper {
 	static final String USERNAME = "dbadmin"; //username of database
 	static final String PASSWORD = "password";
-	static final String VERTICAHOST = "192.168.0.108"; //Vertica Host IP Address. Change this constant according to your setup
+	static final String VERTICAHOST = "192.168.1.110"; //Vertica Host IP Address. Change this constant according to your setup
 	static final String PORTNUMBER = "5433"; //Vertica Host Port Number. Change this constant according to your setup
 	static final String DATABASENAME = "NYTrafficCollision";  //Database Name for this Tutorial
 	
@@ -125,4 +125,78 @@ public class DBHelper {
 		//If something went wrong, return null
 		return null;
 	}
+	
+	public List<CollisionRecord> getCollisionRecordsIn(Date start, Date end) {
+		try ( Connection conn = connectToDB() ){
+			String sql = "SELECT * FROM public.nypd_motor_vehicle_collisions where date >= ? and date <= ?;";
+			//Create a statement to query the database
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setDate(1, new java.sql.Date(start.getTime()));
+			stmt.setDate(2, new java.sql.Date(end.getTime()));
+			
+			//Query the database using the SQL statement, and get the result set
+			ResultSet rs = stmt.executeQuery();
+			
+			//Construct an ArrayList of TweetInfos
+			List<CollisionRecord> collisionRecords = getListWithResultSet(rs);
+			
+			//Close the ResultSet
+			rs.close();
+			return collisionRecords;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//If something went wrong, return null
+		return null;
+	};
+	
+	public List<CollisionRecord> getCollisionRecordsIn(Date start, Date end, List<AdditionalCondition> additionalConditions) {
+		try ( Connection conn = connectToDB() ){
+			String sql = "SELECT * FROM public.nypd_motor_vehicle_collisions where date >= ? and date <= ?";
+			for (AdditionalCondition additionalCondition : additionalConditions) {
+				switch (additionalCondition) {
+				case WithInjuries:
+					sql += " and number_of_persons_injured > 0";
+					break;
+				case WithDeaths:
+					sql += " and number_of_persons_killed > 0";
+					break;
+				case WithPedestriansInvolved:
+					sql += " and (number_of_pedestrians_injured > 0 or number_of_pedestrians_killed > 0)";
+					break;
+				case WithCyclistsInvolved:
+					sql += " and (number_of_cyclist_injured > 0 or number_of_cyclist_killed > 0)";
+					break;
+				case WithMotoristsInvolved:
+					sql += " and (number_of_motorist_injured > 0 or number_of_motorist_killed > 0)";
+					break;
+				default:
+					break;
+				}
+			}
+			sql += ";";
+			System.out.println(sql);
+			//Create a statement to query the database
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setDate(1, new java.sql.Date(start.getTime()));
+			stmt.setDate(2, new java.sql.Date(end.getTime()));
+			
+			//Query the database using the SQL statement, and get the result set
+			ResultSet rs = stmt.executeQuery();
+			
+			//Construct an ArrayList of TweetInfos
+			List<CollisionRecord> collisionRecords = getListWithResultSet(rs);
+			
+			//Close the ResultSet
+			rs.close();
+			return collisionRecords;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//If something went wrong, return null
+		return null;
+	};
+	
 }
