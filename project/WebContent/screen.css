@@ -1,0 +1,94 @@
+div.filter-form {
+	background: white;
+	width: 200px;
+	height: 400px;
+	position: absolute;
+	top: 200px;
+	left: 40px;
+	border: 1px solid black;
+}
+
+div.filter-form label {
+	display: block;
+	margin-top: 10px;
+	margin-left: 5px;
+}
+
+div.page-loading-mask {
+	/* Indicate the page is loading something with ajax*/
+	height: 100%;
+	width: 100%;
+	background: rgba(0, 0, 0, 0.75);
+	position: absolute;
+	z-index: 2;
+}
+
+div.notification-fadeout {
+	position: absolute;
+	top: 50%;
+	width: 100%;
+	background: rgba(0, 0, 0, 0);
+	font-size: 20px;
+	font-weight: 700;
+	text-align: center;
+}
+
+/* Thanks to http://codepen.io/stephenrichard/pen/bNmavK for the page loading effect*/
+.square {
+  width: 8px;
+  height: 30px;
+  background: #2ecc71;
+  border-radius: 10px;
+  display: block;
+  /*margin:10px;*/
+  -webkit-animation: turn 2.5s ease infinite;
+  animation: turn 2.5s ease infinite;
+}
+.top {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+.bottom {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+}
+.left {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+.right {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: rotate(-180deg);
+  transform: rotate(-180deg);
+}
+@-webkit-keyframes turn {
+  0% {
+    transform: translateX(0) translateY(0) rotate(0);
+  }
+  50% {
+    transform: translateX(400%) translateY(100%) rotate(90deg);
+  }
+  100% {
+    transform: translateX(0) translateY(0) rotate(0);
+  }
+}
+@keyframes turn {
+  0% {
+    transform: translateX(0) translateY(0) rotate(0);
+  }
+  70% {
+    transform: translateX(400%) translateY(100%) rotate(90deg);
+  }
+  100% {
+    transform: translateX(0) translateY(0) rotate(0);
+  }
+}
