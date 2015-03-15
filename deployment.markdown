@@ -7,6 +7,13 @@ If you don't want to read this, please watch [the video deployment guide](https:
 4. Select "Select archive file", and choose the zip file `traffic-collisions-mapping-tutorial.zip`, and click on Finish
 5. DONE!
 
+#### JRE Version
+I strongly encourage you use 7 or higher versions of Java. However, if you have got a JRE 6, please note the below.
+
+1. JRE System Library: As this project is written in Java 7, if you're using Java 6, you should replace the JRE System Library with Java 6. To do this, in the Build Path configuration dialog, click on JRE System Library, and click on "Remove" button. Click on "Add Library..." button, select "JRE System Library", and select an available library to import into the build path.
+2. Project Facets: Again, if you're using Java 6 for development, you should change the project facets. In the project explorer, right click on the project, and choose "Properties", in the list on the left, choose "Project Facets", and change the value of Java from 1.7 to 1.6.
+
+
 ### Deployment of the Database
 1. Get the Virtual Machine up and running
 2. Open up a terminal
