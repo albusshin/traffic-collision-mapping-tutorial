@@ -6,7 +6,6 @@ public class Config {
 	private static JSONObject getConfigJSON() {
 		try {
 			String retStr = Helpers.sendGetRequest("http://localhost:8080/traffic-collision-mapping-tutorial/config/config.json");
-			System.out.println(retStr);
 			return new JSONObject(retStr);
 		} catch (Exception e) {
 			e.printStackTrace();

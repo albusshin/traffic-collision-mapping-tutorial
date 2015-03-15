@@ -34,9 +34,9 @@ public class Helpers {
 		HttpGet get = new HttpGet(url);
 		HttpResponse response = client.execute(get);
  
+		//Print the request and response to console
 		System.out.println("\nSending 'GET' request to URL : " + url);
-		System.out.println("Response Code : " + 
-                       response.getStatusLine().getStatusCode());
+		System.out.println("Response Code : " + response.getStatusLine().getStatusCode());
  
 		BufferedReader reader = new BufferedReader(
                        new InputStreamReader(response.getEntity().getContent()));
@@ -61,6 +61,8 @@ public class Helpers {
 		post.setEntity(new UrlEncodedFormEntity(urlParameters));
 		
 		HttpResponse response = client.execute(post);
+		//Print the request and response to console
+		System.out.println("\nSending 'POST' request to URL : " + url);
 		System.out.println("Response Code : " 
                 + response.getStatusLine().getStatusCode());
  

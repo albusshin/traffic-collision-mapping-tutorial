@@ -112,6 +112,7 @@ public class DBHelper {
 			
 			//Close the ResultSet
 			rs.close();
+			System.out.println("Got " + collisionRecords.size() + " records from Vertica");
 			return collisionRecords;
 		} catch (SQLException e) {
 			e.printStackTrace(); //Print stack trace to see where the bug is originated
@@ -177,7 +178,6 @@ public class DBHelper {
 			}
 			
 			sql += ";";
-			System.out.println(sql);
 			//Create a statement to query the database
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setDate(1, new java.sql.Date(start.getTime()));
@@ -193,6 +193,7 @@ public class DBHelper {
 			
 			//Close the ResultSet
 			rs.close();
+			System.out.println("Got " + collisionRecords.size() + " records from Vertica");
 			return collisionRecords;
 		} catch (SQLException e) {
 			e.printStackTrace(); //Print stack trace to see where the bug is originated

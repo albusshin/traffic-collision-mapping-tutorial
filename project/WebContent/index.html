@@ -1,29 +1,20 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Traffic Collision Mapping Tutorial - HP Haven</title>
-<!-- Bootstrap, jQuery, and Chart.js -->
-<script src="js/jquery-1.11.2.js"></script>
-<script src="js/jquery-ui-1.11.3/jquery-ui.min.js"></script>
-<script src="js/jQRangeSlider-5.7.1/jQRangeSlider-min.js"></script>
-<script src="js/jQRangeSlider-5.7.1/jQAllRangeSliders-min.js"></script>
-<script src="js/lou-multi-select/js/jquery.multi-select.js"></script>
-<script src="js/bootstrap/js/bootstrap.min.js"></script>
-<script src="js/Chart.js"></script>
-<script src="js/cartodb.js"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Traffic Collision Mapping Tutorial - HP Haven</title>
+	<!-- Bootstrap, jQuery, and Chart.js -->
+	
+	<link rel="stylesheet" href="js/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="js/bootstrap/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="js/jquery-ui-1.11.3/jquery-ui.min.css">
+	<link rel="stylesheet" href="js/jQRangeSlider-5.7.1/css/iThing-min.css">
+	<link rel="stylesheet" href="js/lou-multi-select/css/multi-select.css">
+	<!-- This following css file must be loaded from CDN, because it loads some assets from the cartodb server -->
+	<link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.12/themes/css/cartodb.css" >
+	
+	<link rel="stylesheet" href="css/screen.css">
 
-<link rel="stylesheet" href="js/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="js/bootstrap/css/bootstrap-theme.min.css">
-<link rel="stylesheet" href="js/jquery-ui-1.11.3/jquery-ui.min.css">
-<link rel="stylesheet" href="js/jQRangeSlider-5.7.1/css/iThing-min.css">
-<link rel="stylesheet" href="js/lou-multi-select/css/multi-select.css">
-<!-- This following css file must be loaded from CDN, because it loads some assets from the cartodb server -->
-<link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.12/themes/css/cartodb.css" />
-
-<link rel="stylesheet" href="css/screen.css">
 </head>
 <body>
 	<div class="page-loading-mask" hidden="hidden">
@@ -99,8 +90,8 @@
 		<label><input type="checkbox" id="withcyclistsinvolved" name="withcyclistsinvolved"> With Cyclists Involved</label>
 		<label><input type="checkbox" id="withmotoristsinvolved" name="withmotoristsinvolved"> With Motorists Involved</label>
 		<label for="vehiclesInvolved">Vehicles Involved</label>
-		<select name="vehiclesInvolved" id="vehiclesInvolved" width="300px">
-			<option value="-1" selected></option>
+		<select name="vehiclesInvolved" id="vehiclesInvolved">
+			<option value="-1" selected>Not selected</option>
 			<option value="0">0</option>
 			<option value="1">1</option>
 			<option value="2">2</option>
@@ -190,6 +181,14 @@
 	
 	<div id="chart-canvas-wrapper"><canvas id="chartCanvas" width="800" height="600"></canvas></div>
 
+	<script src="js/jquery-1.11.2.js"></script>
+	<script src="js/jquery-ui-1.11.3/jquery-ui.min.js"></script>
+	<script src="js/jQRangeSlider-5.7.1/jQRangeSlider-min.js"></script>
+	<script src="js/jQRangeSlider-5.7.1/jQAllRangeSliders-min.js"></script>
+	<script src="js/lou-multi-select/js/jquery.multi-select.js"></script>
+	<script src="js/bootstrap/js/bootstrap.min.js"></script>
+	<script src="js/Chart.js"></script>
+	<script src="js/cartodb.js"></script>
 	<script src="js/script.js"></script>
 </body>
 </html>

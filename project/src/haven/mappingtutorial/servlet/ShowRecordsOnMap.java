@@ -36,6 +36,7 @@ public class ShowRecordsOnMap extends HttpServlet {
 	
 	// The minimum amount of records to be inserted, to raise a warning that the action might take a long time
 	private static final long WARNING_THRESHOLD = 10000; 
+	public static final int SRID = 4326; //See http://postgis.net/docs/ST_SRID.html for more details
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -78,25 +79,31 @@ public class ShowRecordsOnMap extends HttpServlet {
 		}
 		//Add the additional conditions into our SQL queries
 		AdditionalConditions additionalConditions = new AdditionalConditions();
-		if (paramWithDeaths.equals("true")) additionalConditions.withConditions.add(WithCondition.WithDeaths);
-		if (paramWithInjuries.equals("true")) additionalConditions.withConditions.add(WithCondition.WithInjuries);
-		if (paramWithPedestriansInvolved.equals("true")) additionalConditions.withConditions.add(WithCondition.WithPedestriansInvolved);
-		if (paramWithCyclistsInvolved.equals("true")) additionalConditions.withConditions.add(WithCondition.WithCyclistsInvolved);
-		if (paramWithMotoristsInvolved.equals("true")) additionalConditions.withConditions.add(WithCondition.WithMotoristsInvolved);
-		if (paramVehicleTypes != null) {
-			String[] vehicleTypes = paramVehicleTypes.split(",");
-			for (String vehicleType : vehicleTypes){
-				additionalConditions.vehicleTypes.add(vehicleType);
+		try {
+			if (paramWithDeaths.equals("true")) additionalConditions.withConditions.add(WithCondition.WithDeaths);
+			if (paramWithInjuries.equals("true")) additionalConditions.withConditions.add(WithCondition.WithInjuries);
+			if (paramWithPedestriansInvolved.equals("true")) additionalConditions.withConditions.add(WithCondition.WithPedestriansInvolved);
+			if (paramWithCyclistsInvolved.equals("true")) additionalConditions.withConditions.add(WithCondition.WithCyclistsInvolved);
+			if (paramWithMotoristsInvolved.equals("true")) additionalConditions.withConditions.add(WithCondition.WithMotoristsInvolved);
+			if (paramVehicleTypes != null) {
+				String[] vehicleTypes = paramVehicleTypes.split(",");
+				for (String vehicleType : vehicleTypes){
+					additionalConditions.vehicleTypes.add(vehicleType);
+				}
 			}
-		}
-		if (paramContributingFactors != null) {
-			String[] contributingFactors = paramContributingFactors.split(",");
-			for (String contributingFactor : contributingFactors){
-				additionalConditions.contributingFactors.add(contributingFactor);
+			if (paramContributingFactors != null) {
+				String[] contributingFactors = paramContributingFactors.split(",");
+				for (String contributingFactor : contributingFactors){
+					additionalConditions.contributingFactors.add(contributingFactor);
+				}
 			}
-		}
-		if (paramVehiclesInvolved != null) {
-			additionalConditions.vehiclesInvolved = Integer.parseInt(paramVehiclesInvolved);
+			if (paramVehiclesInvolved != null) {
+				additionalConditions.vehiclesInvolved = Integer.parseInt(paramVehiclesInvolved);
+			}
+		} catch (Exception e) {
+			//Invalid input provided, return 400 not found
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return;
 		}
 		
 		//Get the collision records from Vertica database, using our DBHelper class as the helper
@@ -110,7 +117,7 @@ public class ShowRecordsOnMap extends HttpServlet {
 			try {
 				retJson.put("exceeded", true);
 				retJson.put("amount", collisionRecords.size());
-			} catch (JSONException e) {
+			} catch (JSONException e) { //Never happens
 				e.printStackTrace();
 			}
 			writer.println(retJson);
@@ -141,7 +148,9 @@ public class ShowRecordsOnMap extends HttpServlet {
 			
 			for (int i = 0; i < collisionRecords.size(); i++) {
 				CollisionRecord collisionRecord = collisionRecords.get(i);
-				sql += "(ST_GeomFromText(\'POINT(" + collisionRecord.getLongitude() + " " + collisionRecord.getLatitude() + ")', 4326), " +
+				//This is how we convert text longitude and latitude to a geom point, using Post GIS format.
+				//See http://postgis.net/docs/ST_GeomFromText.html for more details.
+				sql += "(ST_GeomFromText(\'POINT(" + collisionRecord.getLongitude() + " " + collisionRecord.getLatitude() + ")', " + SRID + "), " +
 						collisionRecord.getKilledPersons() + ", " + 
 						collisionRecord.getInjuredPersons() + ", " + 
 						collisionRecord.getInjuredPedestrians() + ", " + 

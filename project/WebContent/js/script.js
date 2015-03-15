@@ -3,17 +3,15 @@ var dateSlider; //Date Range Slider appearing in the page
 var btnFilter = $("button.filter");
 var btnToggleFilterForm = $("button.toggle-filter-form");
 var btnToggleChart = $("button.toggle-chart");
-Date.prototype.yyyymmdd = function() { //Date formatter See http://stackoverflow.com/questions/3066586/get-string-in-yyyymmdd-format-from-js-date-object
-	var yyyy = this.getFullYear().toString();
-	var mm = (this.getMonth()+1).toString(); // Date.getMonth() is zero-based
-	var dd  = this.getDate().toString();
-	return yyyy + '-' + (mm.length==2?mm:"0"+mm) + '-' + (dd.length==2?dd:"0"+dd); // padding
+Date.prototype.yyyymmdd = function () { //Date formatter See http://stackoverflow.com/questions/3066586/get-string-in-yyyymmdd-format-from-js-date-object
+    var yyyy = this.getFullYear().toString();
+    var mm = (this.getMonth()+1).toString(); // Date.getMonth() is zero-based
+    var dd  = this.getDate().toString();
+    return yyyy + '-' + (mm.length == 2 ? mm : "0" + mm) + '-' + (dd.length == 2 ? dd : "0" + dd); // padding
 };
-$(function (){
-	
+$(function () {
 	//Display the map first, store the visualization into a var.
 	var vis = cartodb.createVis('map', 'http://albusshin.cartodb.com/api/v2/viz/e43f2674-c941-11e4-bca1-0e4fddd5de28/viz.json');
-	
 	// Check http://ghusse.github.io/jQRangeSlider/options.html#optionsUsage 
 	// for dateRangeSlider usage
 	dateSlider = $("#slider").dateRangeSlider({
