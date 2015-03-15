@@ -1,11 +1,44 @@
+html, body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+
+.navbar {
+	margin-bottom: 2px;
+}
+
+div.navbar-right.nav button{
+	margin: 7px;
+}
+
+div#map {
+	width: 100%;
+	height: calc(100% - 60px);
+}
+
+div#slider {
+	margin: 0 auto;
+	width: calc(100% - 130px);
+	left: 65px;
+	position: absolute;
+	bottom: 30px;
+	z-index: 10;
+}
+
 div.filter-form {
 	background: white;
-	width: 200px;
-	height: 400px;
+	width: 420px;
 	position: absolute;
-	top: 200px;
-	left: 40px;
-	border: 1px solid black;
+	z-index: 10;
+	top: 100px;
+	left: calc(50% - 210px);
+	background: rgba(0, 0, 0, 0.75);
+	color: white;
+	padding: 20px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
 }
 
 div.filter-form label {
@@ -14,13 +47,27 @@ div.filter-form label {
 	margin-left: 5px;
 }
 
+div.filter-form input {
+	margin-right: 10px;
+	color: black;
+}
+
+select#vehiclesInvolved {
+	width: 50px;
+	color: black;
+}
+
+div.filter-form button.filter {
+	margin: 10px;
+}
+
 div.page-loading-mask {
 	/* Indicate the page is loading something with ajax*/
 	height: 100%;
 	width: 100%;
 	background: rgba(0, 0, 0, 0.75);
 	position: absolute;
-	z-index: 2;
+	z-index: 99;
 }
 
 div.notification-fadeout {
@@ -31,6 +78,25 @@ div.notification-fadeout {
 	font-size: 20px;
 	font-weight: 700;
 	text-align: center;
+	z-index: 2;
+}
+
+div#chart-canvas-wrapper {
+	position: absolute;
+	width: 900px;
+	height: 700px;
+	top: 150px;
+	left: calc(50% - 450px);
+	padding: 40px;
+	background: rgba(255, 255, 255, 0.95);
+	z-index: -1;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+
+div#chart-canvas-wrapper.displayed {
+	z-index: 9;
 }
 
 /* Thanks to http://codepen.io/stephenrichard/pen/bNmavK for the page loading effect*/

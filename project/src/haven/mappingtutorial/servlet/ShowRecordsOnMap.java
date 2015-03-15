@@ -2,7 +2,8 @@ package haven.mappingtutorial.servlet;
 
 import haven.mappingtutorial.Constants;
 import haven.mappingtutorial.Helpers;
-import haven.mappingtutorial.db.AdditionalCondition;
+import haven.mappingtutorial.db.AdditionalConditions;
+import haven.mappingtutorial.db.AdditionalConditions.WithCondition;
 import haven.mappingtutorial.db.DBHelper;
 import haven.mappingtutorial.model.CollisionRecord;
 
@@ -11,7 +12,6 @@ import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -27,10 +27,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Servlet implementation class TestServlet
+ * Servlet implementation class ShowRecordsOnMap
  */
-@WebServlet("/TestServlet")
-public class TestServlet extends HttpServlet {
+@WebServlet("/ShowRecordsOnMap")
+public class ShowRecordsOnMap extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -40,7 +40,7 @@ public class TestServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TestServlet() {
+    public ShowRecordsOnMap() {
         super();
     }
 
@@ -52,12 +52,14 @@ public class TestServlet extends HttpServlet {
 		String startStr = request.getParameter("start"); //The start date passed in
 		String endStr = request.getParameter("end"); //The end date passed in
 		//The following parameters should be self-explained
-		String withDeaths = request.getParameter("withDeaths");
-		String withInjuries = request.getParameter("withInjuries");
-		String withPedestriansInvolved = request.getParameter("withPedestriansInvolved");
-		String withCyclistsInvolved = request.getParameter("withCyclistsInvolved");
-		String withMotoristsInvolved = request.getParameter("withMotoristsInvolved");
-		
+		String paramWithDeaths = request.getParameter("withDeaths");
+		String paramWithInjuries = request.getParameter("withInjuries");
+		String paramWithPedestriansInvolved = request.getParameter("withPedestriansInvolved");
+		String paramWithCyclistsInvolved = request.getParameter("withCyclistsInvolved");
+		String paramWithMotoristsInvolved = request.getParameter("withMotoristsInvolved");
+		String paramVehicleTypes = request.getParameter("vehicleTypes");
+		String paramContributingFactors = request.getParameter("contributingFactors");
+		String paramVehiclesInvolved = request.getParameter("vehiclesInvolved");
 		String confirmed = request.getParameter("confirmed"); //Whether this request has been confirmed by the user.
 		
 		//Use this date format to parse the dates passed in as strings
@@ -70,16 +72,32 @@ public class TestServlet extends HttpServlet {
 			System.out.println("start = " + start);
 			System.out.println("end = " + end);
 		} catch (ParseException e1) {
-			//TODO
-			e1.printStackTrace();
+			//Return 400 not found
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return;
 		}
 		//Add the additional conditions into our SQL queries
-		List<AdditionalCondition> additionalConditions = new ArrayList<AdditionalCondition>();
-		if (withDeaths.equals("true")) additionalConditions.add(AdditionalCondition.WithDeaths);
-		if (withInjuries.equals("true")) additionalConditions.add(AdditionalCondition.WithInjuries);
-		if (withPedestriansInvolved.equals("true")) additionalConditions.add(AdditionalCondition.WithPedestriansInvolved);
-		if (withCyclistsInvolved.equals("true")) additionalConditions.add(AdditionalCondition.WithCyclistsInvolved);
-		if (withMotoristsInvolved.equals("true")) additionalConditions.add(AdditionalCondition.WithMotoristsInvolved);
+		AdditionalConditions additionalConditions = new AdditionalConditions();
+		if (paramWithDeaths.equals("true")) additionalConditions.withConditions.add(WithCondition.WithDeaths);
+		if (paramWithInjuries.equals("true")) additionalConditions.withConditions.add(WithCondition.WithInjuries);
+		if (paramWithPedestriansInvolved.equals("true")) additionalConditions.withConditions.add(WithCondition.WithPedestriansInvolved);
+		if (paramWithCyclistsInvolved.equals("true")) additionalConditions.withConditions.add(WithCondition.WithCyclistsInvolved);
+		if (paramWithMotoristsInvolved.equals("true")) additionalConditions.withConditions.add(WithCondition.WithMotoristsInvolved);
+		if (paramVehicleTypes != null) {
+			String[] vehicleTypes = paramVehicleTypes.split(",");
+			for (String vehicleType : vehicleTypes){
+				additionalConditions.vehicleTypes.add(vehicleType);
+			}
+		}
+		if (paramContributingFactors != null) {
+			String[] contributingFactors = paramContributingFactors.split(",");
+			for (String contributingFactor : contributingFactors){
+				additionalConditions.contributingFactors.add(contributingFactor);
+			}
+		}
+		if (paramVehiclesInvolved != null) {
+			additionalConditions.vehiclesInvolved = Integer.parseInt(paramVehiclesInvolved);
+		}
 		
 		//Get the collision records from Vertica database, using our DBHelper class as the helper
 		List<CollisionRecord> collisionRecords = new DBHelper().getCollisionRecordsIn(start, end, additionalConditions);
@@ -100,6 +118,16 @@ public class TestServlet extends HttpServlet {
 		}
 		
 		String sql = "TRUNCATE TABLE nytc;";
+		
+		// Data for displaying chart
+		int killedPersons = 0;
+		int injuredPersons = 0;
+		int killedPedestrians = 0;
+		int injuredPedestrians = 0;
+		int killedCyclists = 0;
+		int injuredCyclists = 0;
+		int killedMotorists = 0;
+		int injuredMotorists = 0;
 		if (collisionRecords.size() > 0) { // If the size == 0, we don't need to add the INSERT statement.
 			sql += " INSERT INTO nytc (the_geom,"
 					+ "persons_killed,"
@@ -125,6 +153,14 @@ public class TestServlet extends HttpServlet {
 						")";
 				if (i == collisionRecords.size() - 1) sql += ";";
 				else sql += ",";
+				killedPersons += collisionRecord.getKilledPersons();
+				injuredPersons += collisionRecord.getInjuredPersons();
+				killedPedestrians += collisionRecord.getKilledPedestrians();
+				injuredPedestrians += collisionRecord.getInjuredPedestrians();
+				killedCyclists += collisionRecord.getKilledCyclist();
+				injuredCyclists += collisionRecord.getInjuredCyclist();
+				killedMotorists += collisionRecord.getKilledMotorist();
+				injuredMotorists += collisionRecord.getInjuredMotorist();
 			}
 		}
 		String url = "http://albusshin.cartodb.com/api/v2/sql";
@@ -137,17 +173,25 @@ public class TestServlet extends HttpServlet {
 			System.out.println(now + ", " + c);
 			System.out.println(ret);
 		} catch (Exception e) {
-			//TODO
-			e.printStackTrace();
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return;
 		}
 		
-
+		
 		try {
 			retJson.put("exceeded", false);
 			retJson.put("amount", collisionRecords.size());
+			retJson.put("killedPersons", killedPersons);
+			retJson.put("injuredPersons", injuredPersons);
+			retJson.put("killedPedestrians", killedPedestrians);
+			retJson.put("injuredPedestrians", injuredPedestrians);
+			retJson.put("killedCyclists", killedCyclists);
+			retJson.put("injuredCyclists", injuredCyclists);
+			retJson.put("killedMotorists", killedMotorists);
+			retJson.put("injuredMotorists", injuredMotorists);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return;
 		}
 		
 		writer.println(retJson);

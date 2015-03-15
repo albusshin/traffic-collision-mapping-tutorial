@@ -1,5 +1,6 @@
 package haven.mappingtutorial.db;
 
+import haven.mappingtutorial.db.AdditionalConditions.WithCondition;
 import haven.mappingtutorial.model.CollisionRecord;
 
 import java.sql.Connection;
@@ -7,7 +8,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -58,7 +58,6 @@ public class DBHelper {
 			//Iterate the whole result set
 			//Create a new TweetInfo object, fill the fields and then add to the ArrayList
 			CollisionRecord collisionRecord = new CollisionRecord();
-			
 			collisionRecord.setDate(rs.getDate("date"));
 			collisionRecord.setTime(rs.getTime("time"));
 			collisionRecord.setBorough(rs.getString("borough"));
@@ -88,11 +87,9 @@ public class DBHelper {
 			collisionRecord.setVehicleTypeCode3(rs.getString("vehicle_type_code_3"));
 			collisionRecord.setVehicleTypeCode4(rs.getString("vehicle_type_code_4"));
 			collisionRecord.setVehicleTypeCode5(rs.getString("vehicle_type_code_5"));
-			
 			collisionRecords.add(collisionRecord);
 			
 		}
-		System.out.println(collisionRecords.size());
 		return collisionRecords;
 	}
 
@@ -119,43 +116,17 @@ public class DBHelper {
 			rs.close();
 			return collisionRecords;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			e.printStackTrace(); //Print stack trace to see where the bug is originated
+			//If something went wrong, return null
+			return null;
 		}
-		
-		//If something went wrong, return null
-		return null;
 	}
 	
-	public List<CollisionRecord> getCollisionRecordsIn(Date start, Date end) {
-		try ( Connection conn = connectToDB() ){
-			String sql = "SELECT * FROM public.nypd_motor_vehicle_collisions where date >= ? and date <= ?;";
-			//Create a statement to query the database
-			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setDate(1, new java.sql.Date(start.getTime()));
-			stmt.setDate(2, new java.sql.Date(end.getTime()));
-			
-			//Query the database using the SQL statement, and get the result set
-			ResultSet rs = stmt.executeQuery();
-			
-			//Construct an ArrayList of TweetInfos
-			List<CollisionRecord> collisionRecords = getListWithResultSet(rs);
-			
-			//Close the ResultSet
-			rs.close();
-			return collisionRecords;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		//If something went wrong, return null
-		return null;
-	};
-	
-	public List<CollisionRecord> getCollisionRecordsIn(Date start, Date end, List<AdditionalCondition> additionalConditions) {
+	public List<CollisionRecord> getCollisionRecordsIn(Date start, Date end, AdditionalConditions additionalConditions) {
 		try ( Connection conn = connectToDB() ){
 			String sql = "SELECT * FROM public.nypd_motor_vehicle_collisions where date >= ? and date <= ?";
-			for (AdditionalCondition additionalCondition : additionalConditions) {
-				switch (additionalCondition) {
+			for (WithCondition withCondition : additionalConditions.withConditions) {
+				switch (withCondition) {
 				case WithInjuries:
 					sql += " and number_of_persons_injured > 0";
 					break;
@@ -175,13 +146,47 @@ public class DBHelper {
 					break;
 				}
 			}
+			List<String> paramsToSet = new ArrayList<String>(); //Use prepared Statement to set params in SQL
+			if (additionalConditions.vehicleTypes.size() != 0) {
+				for (String vehicleType : additionalConditions.vehicleTypes) {
+					sql += " and (vehicle_type_code_1 = ? or"
+							+ " vehicle_type_code_2 = ? or"
+							+ " vehicle_type_code_3 = ? or"
+							+ " vehicle_type_code_4 = ? or"
+							+ " vehicle_type_code_5 = ?)";
+					for (int i=0; i<5; i++) paramsToSet.add(vehicleType);
+				}
+			}
+			if (additionalConditions.contributingFactors.size() != 0) {
+				for (String contributingFactor : additionalConditions.contributingFactors) {
+					sql += " and (contributing_factor_vehicle_1 = ? or"
+							+ " contributing_factor_vehicle_2 = ? or"
+							+ " contributing_factor_vehicle_3 = ? or"
+							+ " contributing_factor_vehicle_4 = ? or"
+							+ " contributing_factor_vehicle_5 = ?)";
+					for (int i=0; i<5; i++) paramsToSet.add(contributingFactor);
+				}
+			}
+			if (additionalConditions.vehiclesInvolved != -1) { //prevented SQL Injection from Integer.parseInt()
+				if (additionalConditions.vehiclesInvolved == 0) 
+					sql += " and vehicle_type_code_1 is null";
+				else if (additionalConditions.vehiclesInvolved < 5) { //5 is the max vehicles can be involved in a collision
+					sql += " and vehicle_type_code_" + (additionalConditions.vehiclesInvolved+1) + " is null"
+							+ " and vehicle_type_code_" + additionalConditions.vehiclesInvolved + " is not null";
+				}
+				else // == 5
+					sql += " and vehicle_type_code_5 is not null";
+			}
+			
 			sql += ";";
 			System.out.println(sql);
 			//Create a statement to query the database
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setDate(1, new java.sql.Date(start.getTime()));
 			stmt.setDate(2, new java.sql.Date(end.getTime()));
-			
+			for (int i = 0, j = 3; i < paramsToSet.size(); i++, j++) {
+				stmt.setString(j, paramsToSet.get(i));
+			}
 			//Query the database using the SQL statement, and get the result set
 			ResultSet rs = stmt.executeQuery();
 			
@@ -192,11 +197,9 @@ public class DBHelper {
 			rs.close();
 			return collisionRecords;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			e.printStackTrace(); //Print stack trace to see where the bug is originated
+			//If something went wrong, return null
+			return null;
 		}
-		
-		//If something went wrong, return null
-		return null;
 	};
-	
 }

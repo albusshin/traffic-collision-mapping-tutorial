@@ -2,3 +2,14 @@ To get rid of redundant information:
 select count(*) from nypd_motor_vehicle_collisions where longitude is null or latitude is null;
 delete from nypd_motor_vehicle_collisions where longitude is null or latitude is null;
 commit;
+
+
+To get all of the vehicle type codes:
+select distinct vehicle_type_code_1 from nypd_motor_vehicle_collisions;
+change 1 to 2, 3, 4, 5 for more records.
+
+To get collision records where 2 vehicles were involved:
+select * from nypd_motor_vehicle_collisions where vehicle_type_code_3 is null;
+
+To get collision records where 5 vehicles were involved:
+select * from nypd_motor_vehicle_collisions where vehicle_type_code_5 is not null;
