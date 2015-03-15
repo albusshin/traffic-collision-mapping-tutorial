@@ -1,4 +1,10 @@
-If you don't want to read this, please watch [the video deployment guide](https://www.youtube.com/playlist?list=PLSYa2aROWeB_m-hEPK5qKPBH2nZsHdMEW)
+## Video Playlist
+[Deployment Guide & Tutorial Youtube Playlist](https://www.youtube.com/playlist?list=PLSYa2aROWeB_m-hEPK5qKPBH2nZsHdMEW)
+
+## Blog
+[Read my blog post of this tutorial](http://blog.albusshin.com/tutorial/2015/03/15/New-York-City-traffic-collision-mapping-tutorial.html)
+
+## Deployment
 
 ### Deployment of the project
 1. Open Eclipse for Java EE Developers IDE
