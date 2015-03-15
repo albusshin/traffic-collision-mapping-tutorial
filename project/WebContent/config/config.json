@@ -1,0 +1,10 @@
+{
+	cartoDBApiKey : "77fc5a297e4d8d9e9fb7f1b59eb26a4edfbc439b",
+	database: {
+		username: "dbadmin",
+		password: "password",
+		verticaHostIP: "192.168.1.110",
+		portNumber: "5433",
+		databaseName: "NYTrafficCollision"
+	}
+}

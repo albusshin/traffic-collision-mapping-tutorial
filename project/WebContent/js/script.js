@@ -77,6 +77,8 @@ $(function (){
 			minDate = dateValues.min,
 			maxDate = dateValues.max;
 		
+		//Build loadUrl to get the records from our Servlet
+		//With the options the user specified in the filter form and the date slider
 		var loadUrl =  "ShowRecordsOnMap?start=" + minDate.yyyymmdd() + "&end=" + maxDate.yyyymmdd();
 			loadUrl += "&withDeaths=" + $("#withdeaths").is(":checked");
 			loadUrl += "&withInjuries=" + $("#withinjuries").is(":checked");
@@ -158,7 +160,6 @@ $(function (){
 		ajaxCompleteHandler = function() {
 			$("div.page-loading-mask").hide();
 		};
-		
 		
 		ajaxStartHandler(); //Start making ajax call, and mask the page to prevent any changes.
 		$.ajax({

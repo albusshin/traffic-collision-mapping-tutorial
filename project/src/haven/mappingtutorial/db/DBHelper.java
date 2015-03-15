@@ -1,5 +1,7 @@
 package haven.mappingtutorial.db;
 
+import haven.mappingtutorial.Config;
+import haven.mappingtutorial.Config.DBConfig;
 import haven.mappingtutorial.db.AdditionalConditions.WithCondition;
 import haven.mappingtutorial.model.CollisionRecord;
 
@@ -16,12 +18,7 @@ import java.util.List;
  * DB class contains helpers of database operations
  */
 public class DBHelper {
-	static final String USERNAME = "dbadmin"; //username of database
-	static final String PASSWORD = "password";
-	static final String VERTICAHOST = "192.168.1.110"; //Vertica Host IP Address. Change this constant according to your setup
-	static final String PORTNUMBER = "5433"; //Vertica Host Port Number. Change this constant according to your setup
-	static final String DATABASENAME = "NYTrafficCollision";  //Database Name for this Tutorial
-	
+	DBConfig dbConfig;
 
 	/**
 	 * Opens a connection to the database.
@@ -29,6 +26,7 @@ public class DBHelper {
 	 * @throws SQLException
 	 */
 	private Connection connectToDB() throws SQLException{
+		dbConfig = new Config().getDBConfig();
 		try {
 			//Try find the driver class
 			Class.forName("com.vertica.Driver");
@@ -40,8 +38,8 @@ public class DBHelper {
 		}
 		//Try connect to the database.
 		Connection conn = DriverManager.getConnection("jdbc:vertica://"
-				+ VERTICAHOST + ":" + PORTNUMBER + "/" + DATABASENAME,
-				USERNAME, PASSWORD);
+				+ dbConfig.verticaHostIP + ":" + dbConfig.portNumber + "/" + dbConfig.databaseName,
+				dbConfig.username, dbConfig.password);
 		//return the connection for further usage.
 		return conn;
 	}

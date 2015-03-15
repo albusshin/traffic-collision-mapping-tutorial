@@ -17,7 +17,7 @@
 
 <link rel="stylesheet" href="js/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="js/bootstrap/css/bootstrap-theme.min.css">
-<link rel="stylesheet" href="js/jquery-ui-1.11.3/jquery-ui.min.css"></script>
+<link rel="stylesheet" href="js/jquery-ui-1.11.3/jquery-ui.min.css">
 <link rel="stylesheet" href="js/jQRangeSlider-5.7.1/css/iThing-min.css">
 <link rel="stylesheet" href="js/lou-multi-select/css/multi-select.css">
 <!-- This following css file must be loaded from CDN, because it loads some assets from the cartodb server -->
@@ -93,7 +93,7 @@
 
 	<div id="slider"></div>
 	<div class="filter-form">
-		<label><input type="checkbox" id="withdeaths" name="withdeaths" placeholder="with deaths"> With Deaths</label>
+		<label><input type="checkbox" id="withdeaths" name="withdeaths"> With Deaths</label>
 		<label><input type="checkbox" id="withinjuries" name="withinjuries"> With Injuries</label>
 		<label><input type="checkbox" id="withpedestriansinvolved" name="withpedestriansinvolved"> With Pedestrians Involved</label>
 		<label><input type="checkbox" id="withcyclistsinvolved" name="withcyclistsinvolved"> With Cyclists Involved</label>

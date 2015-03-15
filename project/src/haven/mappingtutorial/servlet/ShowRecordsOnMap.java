@@ -1,6 +1,6 @@
 package haven.mappingtutorial.servlet;
 
-import haven.mappingtutorial.Constants;
+import haven.mappingtutorial.Config;
 import haven.mappingtutorial.Helpers;
 import haven.mappingtutorial.db.AdditionalConditions;
 import haven.mappingtutorial.db.AdditionalConditions.WithCondition;
@@ -165,7 +165,7 @@ public class ShowRecordsOnMap extends HttpServlet {
 		}
 		String url = "http://albusshin.cartodb.com/api/v2/sql";
 		HashMap<String, String> postParams = new HashMap<String, String>();
-		postParams.put("api_key", Constants.CARTODB_APIKEY);
+		postParams.put("api_key", Config.getCartoDBApiKey());
 		postParams.put("q", sql);
 		try {
 			String ret = Helpers.sentPostRequest(url, postParams);
