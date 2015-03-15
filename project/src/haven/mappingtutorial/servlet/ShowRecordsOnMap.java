@@ -46,6 +46,14 @@ public class ShowRecordsOnMap extends HttpServlet {
     }
 
 	/**
+	 * This Servlet does the following things.
+	 * First, get a list of records according to the parameters passed in;
+	 * Then, insert these records to Carto DB to get a map visualization;
+	 * Finally, returns the records metadata as a JSON String using the PrintWriter of the response object.
+	 * 
+	 * However, if the record size is too big, the Servlet doesn't directly insert the records to Carto DB.
+	 * Instead, it asks the user for confirmation of inserting such a big load of data.
+	 * 
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

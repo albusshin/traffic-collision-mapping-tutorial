@@ -4,7 +4,7 @@ import java.sql.Time;
 import java.util.Date;
 
 /**
- * A Tweet Model class
+ * A CollisionRecord Model class
  */
 public class CollisionRecord {
 	private Date date;

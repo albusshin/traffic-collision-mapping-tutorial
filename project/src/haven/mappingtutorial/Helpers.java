@@ -50,8 +50,15 @@ public class Helpers {
 		return result.toString();
 	}
 	
-	
-	public static String sentPostRequest(String url, HashMap<String, String> params) throws ClientProtocolException, IOException {
+
+	/**
+	 * send HTTP Post request with HttpComponent library
+	 * 
+	 * @param url
+	 * @return the response text
+	 * @throws Exception
+	 */
+	public static String sentPostRequest(String url, HashMap<String, String> params) throws Exception {
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpPost post = new HttpPost(url);
 		List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();

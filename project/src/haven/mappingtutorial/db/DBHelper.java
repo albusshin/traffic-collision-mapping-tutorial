@@ -26,7 +26,7 @@ public class DBHelper {
 	 * @throws SQLException
 	 */
 	private Connection connectToDB() throws SQLException{
-		dbConfig = new Config().getDBConfig();
+		dbConfig = new Config().getDBConfig(); //Use the Config class to get the configuration of database connection
 		try {
 			//Try find the driver class
 			Class.forName("com.vertica.Driver");
@@ -90,37 +90,14 @@ public class DBHelper {
 		}
 		return collisionRecords;
 	}
-
-	public List<CollisionRecord> getCollisionRecords(int count) {
-		//Use try with resource statement to open a connection to DB,
-		//so that the connection is automatically closed whether there
-		//is a exception thrown or not.
-		try ( Connection conn = connectToDB() ){
-			//Create a SQL statement to query, using SELECT statement
-			String sql = "SELECT * FROM public.nypd_motor_vehicle_collisions limit ?;";
-			//Create a statement to query the database
-			PreparedStatement stmt = conn.prepareStatement(sql);
-			//Set PreparedStatement parameters, starting from 1. To understand why the parameter starts from 1,
-			//see http://stackoverflow.com/questions/616135/in-jdbc-why-do-parameter-indexes-for-prepared-statements-begin-at-1-instead-of
-			stmt.setInt(1, count);
-			
-			//Query the database using the SQL statement, and get the result set
-			ResultSet rs = stmt.executeQuery();
-			
-			//Construct an ArrayList of TweetInfos
-			List<CollisionRecord> collisionRecords = getListWithResultSet(rs);
-			
-			//Close the ResultSet
-			rs.close();
-			System.out.println("Got " + collisionRecords.size() + " records from Vertica");
-			return collisionRecords;
-		} catch (SQLException e) {
-			e.printStackTrace(); //Print stack trace to see where the bug is originated
-			//If something went wrong, return null
-			return null;
-		}
-	}
 	
+	/**
+	 * Get a list of collision records from Vertica DB, with the additional conditions passed in
+	 * @param start : the date start
+	 * @param end : the date end
+	 * @param additionalConditions : the additional constraints.
+	 * @return a List of `CollisionRecord`s
+	 */
 	public List<CollisionRecord> getCollisionRecordsIn(Date start, Date end, AdditionalConditions additionalConditions) {
 		try ( Connection conn = connectToDB() ){
 			String sql = "SELECT * FROM public.nypd_motor_vehicle_collisions where date >= ? and date <= ?";
@@ -180,6 +157,8 @@ public class DBHelper {
 			sql += ";";
 			//Create a statement to query the database
 			PreparedStatement stmt = conn.prepareStatement(sql);
+			//Set PreparedStatement parameters, starting from 1. To understand why the parameter starts from 1,
+			//see http://stackoverflow.com/a/616156/1831275
 			stmt.setDate(1, new java.sql.Date(start.getTime()));
 			stmt.setDate(2, new java.sql.Date(end.getTime()));
 			for (int i = 0, j = 3; i < paramsToSet.size(); i++, j++) {
