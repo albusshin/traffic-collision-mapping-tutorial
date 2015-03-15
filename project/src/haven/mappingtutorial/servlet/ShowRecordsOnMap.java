@@ -81,7 +81,7 @@ public class ShowRecordsOnMap extends HttpServlet {
 			System.out.println("start = " + start);
 			System.out.println("end = " + end);
 		} catch (ParseException e1) {
-			//Return 400 not found
+			//Return 404 not found
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return;
 		}
@@ -147,8 +147,8 @@ public class ShowRecordsOnMap extends HttpServlet {
 			sql += " INSERT INTO nytc (the_geom,"
 					+ "persons_killed,"
 					+ "persons_injured,"
-					+ "pedestrains_injured,"
-					+ "pedestrains_killed,"
+					+ "pedestrians_injured,"
+					+ "pedestrians_killed,"
 					+ "cyclists_injured,"
 					+ "cyclists_killed,"
 					+ "motorists_injured,"
@@ -182,18 +182,18 @@ public class ShowRecordsOnMap extends HttpServlet {
 		}
 		String url = "http://albusshin.cartodb.com/api/v2/sql";
 		HashMap<String, String> postParams = new HashMap<String, String>();
-		postParams.put("api_key", Config.getCartoDBApiKey());
+		postParams.put("api_key", new Config().getCartoDBApiKey());
 		postParams.put("q", sql);
 		try {
-			String ret = Helpers.sentPostRequest(url, postParams);
+			String ret = Helpers.sendPostRequest(url, postParams);
 			Calendar now = Calendar.getInstance();
 			System.out.println(now + ", " + c);
 			System.out.println(ret);
 		} catch (Exception e) {
+			//404
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return;
 		}
-		
 		
 		try {
 			retJson.put("exceeded", false);
@@ -207,6 +207,7 @@ public class ShowRecordsOnMap extends HttpServlet {
 			retJson.put("killedMotorists", killedMotorists);
 			retJson.put("injuredMotorists", injuredMotorists);
 		} catch (JSONException e) {
+			//404
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return;
 		}

@@ -1,19 +1,31 @@
 package haven.mappingtutorial;
 
+import java.io.InputStream;
+
 import org.json.JSONObject;
 
 public class Config {
-	private static JSONObject getConfigJSON() {
+	
+	//To understand how this function works,
+	//see http://stackoverflow.com/a/5445161/1831275
+	static String convertStreamToString(java.io.InputStream is) {
+	    java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
+	    return s.hasNext() ? s.next() : "";
+	}
+	
+	private JSONObject getConfigJSON() {
+		ClassLoader loader = Config.class.getClassLoader();
+		InputStream is = loader.getResourceAsStream("haven/mappingtutorial/config.json");
 		try {
-			String retStr = Helpers.sendGetRequest("http://localhost:8080/traffic-collision-mapping-tutorial/config/config.json");
-			return new JSONObject(retStr);
-		} catch (Exception e) {
+			return new JSONObject(convertStreamToString(is));
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	public static String getCartoDBApiKey() {
-		JSONObject configJSON = getConfigJSON();
+	public String getCartoDBApiKey() {
+		JSONObject configJSON = this.getConfigJSON();
 		try {
 			return configJSON.getString("cartoDBApiKey");
 		}
@@ -23,7 +35,7 @@ public class Config {
 		}
 	}
 	public DBConfig getDBConfig() {
-		JSONObject configJSON = getConfigJSON();
+		JSONObject configJSON = this.getConfigJSON();
 		try {
 			configJSON = configJSON.getJSONObject("database");
 			DBConfig dbConfig = this.new DBConfig();

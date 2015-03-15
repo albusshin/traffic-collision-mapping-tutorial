@@ -84,93 +84,98 @@
 
 	<div id="slider"></div>
 	<div class="filter-form">
-		<label><input type="checkbox" id="withdeaths" name="withdeaths"> With Deaths</label>
-		<label><input type="checkbox" id="withinjuries" name="withinjuries"> With Injuries</label>
-		<label><input type="checkbox" id="withpedestriansinvolved" name="withpedestriansinvolved"> With Pedestrians Involved</label>
-		<label><input type="checkbox" id="withcyclistsinvolved" name="withcyclistsinvolved"> With Cyclists Involved</label>
-		<label><input type="checkbox" id="withmotoristsinvolved" name="withmotoristsinvolved"> With Motorists Involved</label>
-		<label for="vehiclesInvolved">Vehicles Involved</label>
-		<select name="vehiclesInvolved" id="vehiclesInvolved">
-			<option value="-1" selected>Not selected</option>
-			<option value="0">0</option>
-			<option value="1">1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-			<option value="4">4</option>
-			<option value="5">5</option>
-		</select>
-		<label for="vehicleTypes">Vehicle Types (Select no more than 5 options)</label>
-		<select name="vehicleTypes" id="vehicleTypes" multiple>
-			<option value="VAN">Van</option>
-			<option value="SMALL COM VEH(4 TIRES)">Small company vehicle (4 tires)</option>
-			<option value="SCOOTER">Scooter</option>
-			<option value="SPORT UTILITY / STATION WAGON">Sport utility / Station Wagon</option>
-			<option value="BUS">Bus</option>
-			<option value="FIRE TRUCK">Fire truck</option>
-			<option value="LARGE COM VEH(6 OR MORE TIRES)">Large company vehicle (6 or more tires)</option>
-			<option value="LIVERY VEHICLE">Livery Vehicle</option>
-			<option value="BICYCLE">Bicycle</option>
-			<option value="PICK-UP TRUCK">Pick-up truck</option>
-			<option value="PEDICAB">Pedicab</option>
-			<option value="TAXI">Taxi</option>
-			<option value="AMBULANCE">Ambulance</option>
-			<option value="PASSENGER VEHICLE">Passenger Vehicle</option>
-			<option value="MOTORCYCLE">Motorcycle</option>
-			<option value="UNKNOWN">Unknown</option>
-			<option value="OTHER">Other</option>
-		</select>
-		
-		<label for="contributingFactors">Contributing Factors (Select no more than 5 options)</label>
-		<select name="contributingFactors" id="contributingFactors" multiple>
-			<option value="Failure to Yield Right-of-Way">Failure to Yield Right-of-Way</option>
-			<option value="Illness">Illness</option>
-			<option value="Pavement Slippery">Pavement Slippery</option>
-			<option value="Lane Marking Improper/Inadequate">Lane Marking Improper/Inadequate</option>
-			<option value="Oversized Vehicle">Oversized Vehicle</option>
-			<option value="Unsafe Lane Changing">Unsafe Lane Changing</option>
-			<option value="Backing Unsafely">Backing Unsafely</option>
-			<option value="Passenger Distraction">Passenger Distraction</option>
-			<option value="Headlights Defective">Headlights Defective</option>
-			<option value="Other Lighting Defects">Other Lighting Defects</option>
-			<option value="Drugs (Illegal)">Drugs (Illegal)</option>
-			<option value="Driver Inexperience">Driver Inexperience</option>
-			<option value="Cell Phone (hands-free)">Cell Phone (hands-free)</option>
-			<option value="Prescription Medication">Prescription Medication</option>
-			<option value="Unspecified">Unspecified</option>
-			<option value="Unsafe Speed">Unsafe Speed</option>
-			<option value="Reaction to Other Uninvolved Vehicle">Reaction to Other Uninvolved Vehicle</option>
-			<option value="Obstruction/Debris">Obstruction/Debris</option>
-			<option value="Lost Consciousness">Lost Consciousness</option>
-			<option value="Following Too Closely">Following Too Closely</option>
-			<option value="Traffic Control Device Improper/Non-Working">Traffic Control Device Improper/Non-Working</option>
-			<option value="Fell Asleep">Fell Asleep</option>
-			<option value="Accelerator Defective">Accelerator Defective</option>
-			<option value="Traffic Control Disregarded">Traffic Control Disregarded</option>
-			<option value="Physical Disability">Physical Disability</option>
-			<option value="Pavement Defective">Pavement Defective</option>
-			<option value="Steering Failure">Steering Failure</option>
-			<option value="Passing or Lane Usage Improper">Passing or Lane Usage Improper</option>
-			<option value="Other Vehicular">Other Vehicular</option>
-			<option value="Driver Inattention/Distraction">Driver Inattention/Distraction</option>
-			<option value="Tire Failure/Inadequate">Tire Failure/Inadequate</option>
-			<option value="Failure to Keep Right">Failure to Keep Right</option>
-			<option value="Windshield Inadequate">Windshield Inadequate</option>
-			<option value="View Obstructed/Limited">View Obstructed/Limited</option>
-			<option value="Outside Car Distraction">Outside Car Distraction</option>
-			<option value="Tow Hitch Defective">Tow Hitch Defective</option>
-			<option value="Glare">Glare</option>
-			<option value="Pedestrian/Bicyclist/Other Pedestrian Error/Confusion">Pedestrian/Bicyclist/Other Pedestrian Error/Confusion</option>
-			<option value="Other Electronic Device">Other Electronic Device</option>
-			<option value="Turning Improperly">Turning Improperly</option>
-			<option value="Alcohol Involvement">Alcohol Involvement</option>
-			<option value="Shoulders Defective/Improper">Shoulders Defective/Improper</option>
-			<option value="Brakes Defective">Brakes Defective</option>
-			<option value="Cell Phone (hand-held)">Cell Phone (hand-held)</option>
-			<option value="Fatigued/Drowsy">Fatigued/Drowsy</option>
-			<option value="Aggressive Driving/Road Rage">Aggressive Driving/Road Rage</option>
-			<option value="Animals Action">Animals Action</option>
-		</select>
-		<button class="btn btn-large btn-success filter">Filter</button>
+		<div class="filter-section">
+			<label><input type="checkbox" id="withdeaths" name="withdeaths"> With Deaths</label>
+			<label><input type="checkbox" id="withinjuries" name="withinjuries"> With Injuries</label>
+			<label><input type="checkbox" id="withpedestriansinvolved" name="withpedestriansinvolved"> With Pedestrians Involved</label>
+			<label><input type="checkbox" id="withcyclistsinvolved" name="withcyclistsinvolved"> With Cyclists Involved</label>
+			<label><input type="checkbox" id="withmotoristsinvolved" name="withmotoristsinvolved"> With Motorists Involved</label>
+			<label for="vehiclesInvolved">Vehicles Involved</label>
+			<select name="vehiclesInvolved" id="vehiclesInvolved">
+				<option value="-1" selected>Not selected</option>
+				<option value="0">0</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+			</select>
+			<button class="btn btn-large btn-success filter">Filter</button>
+		</div>
+		<div class="filter-section">
+			<label for="vehicleTypes">Vehicle Types (Select no more than 5 options)</label>
+			<select name="vehicleTypes" id="vehicleTypes" multiple>
+				<option value="VAN">Van</option>
+				<option value="SMALL COM VEH(4 TIRES)">Small company vehicle (4 tires)</option>
+				<option value="SCOOTER">Scooter</option>
+				<option value="SPORT UTILITY / STATION WAGON">Sport utility / Station Wagon</option>
+				<option value="BUS">Bus</option>
+				<option value="FIRE TRUCK">Fire truck</option>
+				<option value="LARGE COM VEH(6 OR MORE TIRES)">Large company vehicle (6 or more tires)</option>
+				<option value="LIVERY VEHICLE">Livery Vehicle</option>
+				<option value="BICYCLE">Bicycle</option>
+				<option value="PICK-UP TRUCK">Pick-up truck</option>
+				<option value="PEDICAB">Pedicab</option>
+				<option value="TAXI">Taxi</option>
+				<option value="AMBULANCE">Ambulance</option>
+				<option value="PASSENGER VEHICLE">Passenger Vehicle</option>
+				<option value="MOTORCYCLE">Motorcycle</option>
+				<option value="UNKNOWN">Unknown</option>
+				<option value="OTHER">Other</option>
+			</select>
+		</div>
+		<div class="filter-section">		
+			<label for="contributingFactors">Contributing Factors (Select no more than 5 options)</label>
+			<select name="contributingFactors" id="contributingFactors" multiple>
+				<option value="Failure to Yield Right-of-Way">Failure to Yield Right-of-Way</option>
+				<option value="Illness">Illness</option>
+				<option value="Pavement Slippery">Pavement Slippery</option>
+				<option value="Lane Marking Improper/Inadequate">Lane Marking Improper/Inadequate</option>
+				<option value="Oversized Vehicle">Oversized Vehicle</option>
+				<option value="Unsafe Lane Changing">Unsafe Lane Changing</option>
+				<option value="Backing Unsafely">Backing Unsafely</option>
+				<option value="Passenger Distraction">Passenger Distraction</option>
+				<option value="Headlights Defective">Headlights Defective</option>
+				<option value="Other Lighting Defects">Other Lighting Defects</option>
+				<option value="Drugs (Illegal)">Drugs (Illegal)</option>
+				<option value="Driver Inexperience">Driver Inexperience</option>
+				<option value="Cell Phone (hands-free)">Cell Phone (hands-free)</option>
+				<option value="Prescription Medication">Prescription Medication</option>
+				<option value="Unspecified">Unspecified</option>
+				<option value="Unsafe Speed">Unsafe Speed</option>
+				<option value="Reaction to Other Uninvolved Vehicle">Reaction to Other Uninvolved Vehicle</option>
+				<option value="Obstruction/Debris">Obstruction/Debris</option>
+				<option value="Lost Consciousness">Lost Consciousness</option>
+				<option value="Following Too Closely">Following Too Closely</option>
+				<option value="Traffic Control Device Improper/Non-Working">Traffic Control Device Improper/Non-Working</option>
+				<option value="Fell Asleep">Fell Asleep</option>
+				<option value="Accelerator Defective">Accelerator Defective</option>
+				<option value="Traffic Control Disregarded">Traffic Control Disregarded</option>
+				<option value="Physical Disability">Physical Disability</option>
+				<option value="Pavement Defective">Pavement Defective</option>
+				<option value="Steering Failure">Steering Failure</option>
+				<option value="Passing or Lane Usage Improper">Passing or Lane Usage Improper</option>
+				<option value="Other Vehicular">Other Vehicular</option>
+				<option value="Driver Inattention/Distraction">Driver Inattention/Distraction</option>
+				<option value="Tire Failure/Inadequate">Tire Failure/Inadequate</option>
+				<option value="Failure to Keep Right">Failure to Keep Right</option>
+				<option value="Windshield Inadequate">Windshield Inadequate</option>
+				<option value="View Obstructed/Limited">View Obstructed/Limited</option>
+				<option value="Outside Car Distraction">Outside Car Distraction</option>
+				<option value="Tow Hitch Defective">Tow Hitch Defective</option>
+				<option value="Glare">Glare</option>
+				<option value="Pedestrian/Bicyclist/Other Pedestrian Error/Confusion">Pedestrian/Bicyclist/Other Pedestrian Error/Confusion</option>
+				<option value="Other Electronic Device">Other Electronic Device</option>
+				<option value="Turning Improperly">Turning Improperly</option>
+				<option value="Alcohol Involvement">Alcohol Involvement</option>
+				<option value="Shoulders Defective/Improper">Shoulders Defective/Improper</option>
+				<option value="Brakes Defective">Brakes Defective</option>
+				<option value="Cell Phone (hand-held)">Cell Phone (hand-held)</option>
+				<option value="Fatigued/Drowsy">Fatigued/Drowsy</option>
+				<option value="Aggressive Driving/Road Rage">Aggressive Driving/Road Rage</option>
+				<option value="Animals Action">Animals Action</option>
+			</select>
+		</div>
 	</div>
 	<!-- End .filter-form -->
 	

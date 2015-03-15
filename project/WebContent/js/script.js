@@ -11,7 +11,8 @@ Date.prototype.yyyymmdd = function () { //Date formatter See http://stackoverflo
 };
 $(function () {
 	//Display the map first, store the visualization into a var.
-	var vis = cartodb.createVis('map', 'http://albusshin.cartodb.com/api/v2/viz/e43f2674-c941-11e4-bca1-0e4fddd5de28/viz.json');
+	var cartodbMapUrl = 'http://albusshin.cartodb.com/api/v2/viz/9e4b7ba6-cb15-11e4-b57c-0e853d047bba/viz.json';
+	var vis = cartodb.createVis('map', cartodbMapUrl);
 	// Check http://ghusse.github.io/jQRangeSlider/options.html#optionsUsage 
 	// for dateRangeSlider usage
 	dateSlider = $("#slider").dateRangeSlider({
@@ -53,7 +54,7 @@ $(function () {
 	// Wait for a while for the dateRangeSlider to initialize, then hide the slider
 	setTimeout(function() {
 		$("div#slider").fadeToggle(200);
-	}, 500);
+	}, 1000);
 	$("div.filter-form").hide();
 	
 	var toggleFilterForm = function () {

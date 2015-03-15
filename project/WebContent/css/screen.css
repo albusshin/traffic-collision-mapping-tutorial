@@ -28,17 +28,22 @@ div#slider {
 
 div.filter-form {
 	background: white;
-	width: 420px;
+	width: 1100px;
 	position: absolute;
 	z-index: 10;
-	top: 100px;
-	left: calc(50% - 210px);
+	bottom: 140px;
+	left: calc(50% - 500px);
 	background: rgba(0, 0, 0, 0.75);
 	color: white;
 	padding: 20px;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
+}
+
+div.filter-form div.filter-section {
+	margin-left: 10px;
+	float: left;
 }
 
 div.filter-form label {
