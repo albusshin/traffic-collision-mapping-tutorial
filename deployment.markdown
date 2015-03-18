@@ -31,8 +31,8 @@ I strongly encourage you use 7 or higher versions of Java. However, if you have 
 14. Select OK, and Select `M Main Menu`
 15. Select `2 Connect to Database`
 16. Execute `\i schema.sql` to create the schema
-17. Execute `copy nypd_motor_vehicle_collisions from '/home/dbadmin/workspace/traffic-collision-mapping-tutorial/data/data_nypd_motor_vehicle_collision.tbl' delimiter '|';
-18. After the rows being loaded, execute `delete from nypd\_motor\_vehicle\_collisions where longitude is null;`
+17. Execute `copy nypd_motor_vehicle_collisions from '/home/dbadmin/workspace/traffic-collision-mapping-tutorial/data/data_nypd_motor_vehicle_collision.tbl' delimiter '|';｀
+18. After the rows being loaded, execute `delete from nypd_motor_vehicle_collisions where longitude is null;`
 19. In the terminal, execute `/sbin/ifconfig` to see the IP address.
 20. Open up `src/haven/mappingtutorial/config.json` to config the DB connections properties
 21. DONE!
